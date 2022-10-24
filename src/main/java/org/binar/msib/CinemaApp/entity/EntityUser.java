@@ -23,4 +23,5 @@ public class EntityUser{
     private String password;
     @OneToMany(targetEntity = Orders.class, cascade = CascadeType.ALL)
     private List<Orders> orders;
+
 }

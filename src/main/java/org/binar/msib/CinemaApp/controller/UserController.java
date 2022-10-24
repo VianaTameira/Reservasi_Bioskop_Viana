@@ -1,9 +1,7 @@
 package org.binar.msib.CinemaApp.controller;
 
-import org.binar.msib.CinemaApp.dto.FilmDTO;
 import org.binar.msib.CinemaApp.dto.UserDTO;
 import org.binar.msib.CinemaApp.entity.EntityUser;
-import org.binar.msib.CinemaApp.entity.Film;
 import org.binar.msib.CinemaApp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,13 +20,15 @@ public class UserController {
         return userService.mapToDto(result);
     }
     //update user
-    @PutMapping("/update")
-    public void updateUser(@RequestBody EntityUser entityUser, Integer user_id){
-        userService.updateUser(entityUser, user_id);
+    @PutMapping("/updateUser/{user_id}")
+    public UserDTO updateUser(@PathVariable Integer user_id, @RequestBody UserDTO request){
+        EntityUser entityUser = userService.mapToEntity(request);
+        EntityUser result = userService.updateUser(user_id, entityUser);
+        return userService.mapToDto(result);
     }
     //delete user
-    @DeleteMapping("/delete")
-    public void deleteUser(@RequestBody Integer user_id){
-        userService.delete(user_id);
+    @DeleteMapping("/deleteUser/{user_id}")
+    public boolean deleteUser(@RequestBody Integer user_id){
+        return userService.delete(user_id);
     }
 }
