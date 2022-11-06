@@ -4,7 +4,6 @@ import org.binar.msib.CinemaApp.dto.FilmDTO;
 import org.binar.msib.CinemaApp.entity.Film;
 import org.binar.msib.CinemaApp.entity.Schedule;
 import org.binar.msib.CinemaApp.services.FilmService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,9 +12,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/film")
 public class FilmController {
-    @Autowired
+    final
     FilmService filmService;
-   @PostMapping("/create")
+
+    public FilmController(FilmService filmService) {
+        this.filmService = filmService;
+    }
+
+    @PostMapping("/create")
     public FilmDTO insertFilm(@RequestBody FilmDTO request){
        Film film = filmService.mapToEntity(request);
        Film result = filmService.insertFilm(film);
@@ -29,7 +33,7 @@ public class FilmController {
    }
    @GetMapping("/all")
    public List<FilmDTO> getAllFilm(){
-      return filmService.getAllFilm().stream().map(film -> filmService.mapToDto(film))
+      return filmService.getAllFilm().stream().map(filmService::mapToDto)
               .collect(Collectors.toList());
    }
    @DeleteMapping("/delete/{film_code}")
