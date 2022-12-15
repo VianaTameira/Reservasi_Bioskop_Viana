@@ -20,8 +20,8 @@ public class SwaggerConfig {
     public OpenAPI customOpenApi(){
         return new OpenAPI()
                 .info(new Info()
-                        .title("FlightTicket")
-                        .description("API for Application Flight Ticketing")
+                        .title("CinemaApp")
+                        .description("API for Cinema Ticketing")
                         .version("1.0.0"))
                 .components(new Components()
                         .addSecuritySchemes("bearer-key",
