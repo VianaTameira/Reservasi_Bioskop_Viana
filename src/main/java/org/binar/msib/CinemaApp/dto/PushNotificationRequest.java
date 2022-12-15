@@ -1,4 +1,4 @@
-package org.binar.msib.CinemaApp.entity;
+package org.binar.msib.CinemaApp.dto;
 
 public class PushNotificationRequest {
     private String title;

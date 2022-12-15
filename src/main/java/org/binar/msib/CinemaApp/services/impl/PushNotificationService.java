@@ -1,6 +1,6 @@
 package org.binar.msib.CinemaApp.services.impl;
 
-import org.binar.msib.CinemaApp.entity.PushNotificationRequest;
+import org.binar.msib.CinemaApp.dto.PushNotificationRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,8 @@
 package org.binar.msib.CinemaApp.config;
 
 import io.jsonwebtoken.*;
-import org.springframework.security.core.Authentication;
 import org.binar.msib.CinemaApp.services.impl.UserDetailsImpl;
+import org.springframework.security.core.Authentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,70 +1,64 @@
 package org.binar.msib.CinemaApp.services.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.binar.msib.CinemaApp.dto.UserDTO;
-import org.binar.msib.CinemaApp.entity.EntityUser;
-import org.binar.msib.CinemaApp.repository.EntityUserRepository;
+import org.binar.msib.CinemaApp.dto.RoleRequest;
+import org.binar.msib.CinemaApp.dto.RoleResponse;
+import org.binar.msib.CinemaApp.dto.SignupRequest;
+import org.binar.msib.CinemaApp.dto.SignupResponse;
+import org.binar.msib.CinemaApp.entity.Role;
+import org.binar.msib.CinemaApp.entity.User;
+import org.binar.msib.CinemaApp.repository.RoleRepository;
+import org.binar.msib.CinemaApp.repository.UserRepository;
 import org.binar.msib.CinemaApp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.Optional;
-
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
-
     @Autowired
-    EntityUserRepository entityUserRepository;
-
+    private RoleRepository roleRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder encoder;
     @Override
-    public EntityUser insertUser(EntityUser entityUser) {
-        EntityUser result = entityUserRepository.save(entityUser);
-        return result;
-    }
+    public RoleResponse registerRole(RoleRequest roleRequest) {
+        Role role = roleRequest.toRoles();
 
-    @Override
-    public EntityUser updateUser(Integer user_id, EntityUser entityUser) {
-        EntityUser result = findById(user_id);
-        if(result != null){
-            result.setUsername(entityUser.getUsername());
-            result.setPassword(entityUser.getPassword());
-            result.setEmail(entityUser.getEmail());
-            result.setOrders(entityUser.getOrders());
-            entityUserRepository.save(entityUser);
+        try {
+            roleRepository.save(role);
+            return RoleResponse.build(role);
         }
-        return null;
-    }
-
-    @Override
-    public boolean delete(Integer user_id) {
-        EntityUser result = findById(user_id);
-        if (result != null){
-            entityUserRepository.deleteById(user_id);
-            return true;
+        catch(Exception exception)
+        {
+            return null;
         }
-        return false;
     }
 
     @Override
-    public EntityUser findById(Integer user_id) {
-        Optional<EntityUser> result = entityUserRepository.findById(user_id);
-        if (result.isPresent()){
-            return result.get();
+    public SignupResponse registerUser(SignupRequest signupRequest) {
+        User user = new User();
+        String email = user.getEmail();
+        if(email == null)
+        {
+            try {
+                Role roles = roleRepository.findByName(String.valueOf(signupRequest.getRoleName()));
+                if(roles != null)
+                {
+                    user = signupRequest.toUsers();
+                    user.setPassword(encoder.encode(user.getPassword()));
+                    userRepository.saveAndFlush(user);
+                    return SignupResponse.build(user);
+                }
+                else
+                    return null;
+            }
+            catch (Exception ignore){
+                return null;
+            }
         }
-        return null;
+        else
+            return null;
     }
-
-    ObjectMapper mapper = new ObjectMapper();
-    @Override
-    public UserDTO mapToDto(EntityUser entityUser) {
-        return mapper.convertValue(entityUser, UserDTO.class);
-    }
-
-    @Override
-    public EntityUser mapToEntity(UserDTO userDTO) {
-        return mapper.convertValue(userDTO, EntityUser.class);
-    }
-
 }
+

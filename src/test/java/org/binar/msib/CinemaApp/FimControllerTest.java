@@ -46,8 +46,8 @@ public class FimControllerTest {
     @Test
     public void testGetAllFilm() throws Exception {
         List<FilmDTO> listFilm = new ArrayList<FilmDTO>();
-        listFilm.add(new FilmDTO(1, "Pengabdi Mantan", "Sedang Tayang", 80000));
-        listFilm.add(new FilmDTO(2, "Terlalu Handsome", "Sedang Tayang", 80000));
+        listFilm.add(new FilmDTO(1, "Pengabdi Mantan", true, 80000));
+        listFilm.add(new FilmDTO(2, "Terlalu Handsome", true, 80000));
 
         Mockito.when(filmService.getAllFilm().stream().map(filmService :: mapToDto).collect(Collectors.toList())).thenReturn(listFilm);
 
@@ -70,7 +70,7 @@ public class FimControllerTest {
 
     @Test
     public void testInsertFilm() throws Exception {
-        FilmDTO savedFilm = new FilmDTO(1,"Pengabdi Mantan","Sedang Tayang",80000);
+        FilmDTO savedFilm = new FilmDTO(1,"Pengabdi Mantan",true,80000);
         Mockito.when(filmService.mapToDto(filmService.insertFilm(film))).thenReturn(savedFilm);
         String url ="/create";
         mockMvc.perform(get(url)).andExpect(status().isOk());

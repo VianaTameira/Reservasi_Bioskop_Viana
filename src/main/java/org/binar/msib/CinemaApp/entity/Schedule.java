@@ -1,11 +1,13 @@
 package org.binar.msib.CinemaApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Time;
-import java.util.Date;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -22,7 +24,13 @@ public class Schedule {
     private Film film;
 
     @Column
-    private Date tanggal_tayang;
-    private Time jam_mulai;
-    private Time jam_selesai;
+    private LocalDate tanggal_tayang;
+
+    @JsonFormat(pattern = "HH:mm:ss")
+    @Column
+    private LocalTime jam_mulai;
+
+    @JsonFormat(pattern = "HH:mm:ss")
+    @Column
+    private LocalTime jam_selesai;
 }

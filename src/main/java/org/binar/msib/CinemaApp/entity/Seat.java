@@ -21,6 +21,7 @@ public class Seat {
     private Integer studio_id;
     @Column
     private boolean seat_status;
+    @Column
     private String SeatRow;
 
 }

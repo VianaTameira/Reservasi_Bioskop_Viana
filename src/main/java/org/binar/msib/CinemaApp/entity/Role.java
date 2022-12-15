@@ -1,31 +1,29 @@
 package org.binar.msib.CinemaApp.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer role_id;
-    @Enumerated(EnumType.STRING)
+
     @Column(length = 20)
-    private ERole name;
-    public Role(){}
+    private String roleName;
 
-    public Integer getId() {
-        return role_id;
-    }
-
-    public void setId(Integer id) {
-        this.role_id = id;
-    }
-
-    public ERole getName() {
-        return name;
-    }
-
-    public void setName(ERole name) {
-        this.name = name;
-    }
+    @JsonIgnore
+    @ManyToMany(mappedBy = "rolesUsers", cascade = CascadeType.ALL)
+    private Set<User> users = new HashSet<>();
 }

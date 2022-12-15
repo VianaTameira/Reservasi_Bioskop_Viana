@@ -15,8 +15,8 @@ public class Film {
 
     @Column
     private String film_name;
-    @Column
-    private String film_status;
+    @Column(name = "sedang_tayang")
+    private Boolean sedangTayang = true;
     @Column
     private Integer price;
     

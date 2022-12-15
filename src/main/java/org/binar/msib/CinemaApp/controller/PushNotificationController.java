@@ -1,7 +1,7 @@
 package org.binar.msib.CinemaApp.controller;
 
-import org.binar.msib.CinemaApp.entity.PushNotificationRequest;
-import org.binar.msib.CinemaApp.entity.PushNotificationResponse;
+import org.binar.msib.CinemaApp.dto.PushNotificationRequest;
+import org.binar.msib.CinemaApp.dto.PushNotificationResponse;
 import org.binar.msib.CinemaApp.services.impl.PushNotificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

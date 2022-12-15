@@ -19,22 +19,24 @@ public class Orders {
     private Integer film_code;
     @ManyToOne
     @JoinColumn(name = "film_code", nullable = false, insertable = false, updatable = false)
-    private Film filmTicket;
+    private Film filmOrder;
 
     @Column
-    private Integer user_id;
+    private Long user_id;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
-    private EntityUser entityUser;
+    private User userOrder;
 
     @Column
-    private Integer SeatNum;
+    private String SeatNum;
+
+    @Column
     private Integer studio_id;
 
     @ManyToOne
     @JoinColumn(name = "SeatNum", nullable = false, insertable = false, updatable = false)
     @JoinColumn (name = "studio_id", nullable = false, insertable = false, updatable = false)
-    private Seat seat;
+    private Seat seatOrder;
 
     @Column
     private Integer jumlah;

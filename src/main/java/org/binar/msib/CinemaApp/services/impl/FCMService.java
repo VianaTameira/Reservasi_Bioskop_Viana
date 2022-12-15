@@ -1,5 +1,5 @@
 package org.binar.msib.CinemaApp.services.impl;
-import org.binar.msib.CinemaApp.entity.PushNotificationRequest;
+import org.binar.msib.CinemaApp.dto.PushNotificationRequest;
 
 import com.google.firebase.messaging.*;
 import com.google.gson.Gson;

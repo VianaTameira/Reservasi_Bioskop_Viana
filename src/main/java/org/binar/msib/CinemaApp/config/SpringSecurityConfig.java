@@ -47,10 +47,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-        http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().anyRequest().authenticated();
+        http.cors().and().csrf().disable();
+        http.exceptionHandling().authenticationEntryPoint(unauthorizedHandler);
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
+        http.authorizeRequests().antMatchers("/user/**").permitAll()
+                .antMatchers("/film/**").permitAll()
+                .antMatchers("/notification/token/**").permitAll()
+                .antMatchers("/order/**").permitAll()
+                .anyRequest().permitAll();
+
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

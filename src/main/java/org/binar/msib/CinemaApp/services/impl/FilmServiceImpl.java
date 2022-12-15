@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.lang.runtime.ObjectMethods;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,8 +37,8 @@ public class FilmServiceImpl implements FilmService {
         Film result = findById(film_code);
         if (result != null) {
             result.setFilm_name(film.getFilm_name());
-//            result.setFilm_status(film.getFilm_status());
-//            result.setPrice(film.getPrice());
+            result.setSedangTayang(film.getSedangTayang());
+            result.setPrice(film.getPrice());
             return filmRepository.save(result);
         }
         return null;
@@ -71,6 +70,12 @@ public class FilmServiceImpl implements FilmService {
             return result.get();
         }
         return null;
+    }
+
+    @Override
+    public List<Film> findOnShowingFilm(Boolean sedangTayang) {
+        List<Film> result = filmRepository.findBySedangTayang(sedangTayang);
+        return result;
     }
 
     ObjectMapper mapper = new ObjectMapper();
